@@ -1,0 +1,16 @@
+{
+    "name": "big-mouth",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "seedDB": "node db/seed.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "aws-sdk": "^2.597.0",
+        "serverless-pseudo-parameters": "^2.5.0"
+    }
+}
