@@ -1,6 +1,12 @@
 'use strict';
 
 const fs = require("fs")
+const Mustache = require('mustache');
+const superagent = require('superagent');
+
+const restaurantsApiRoot = process.env.restaurants_api;
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
 var html;
 
 function loadHtml(){
@@ -11,8 +17,12 @@ function loadHtml(){
 }
 
 module.exports.handler = async (event, context) => {
-  let html = loadHtml();
-
+  let template = loadHtml();
+  let res = await superagent.get(restaurantsApiRoot);
+  let restaurants = res.body;
+  let dayOfWeek = days[new Date().getDay()];
+  let html = Mustache.render(template, { dayOfWeek, restaurants });
+  
   const response = {
     statusCode: 200,
     body: html,
