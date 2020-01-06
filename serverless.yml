@@ -23,6 +23,8 @@ functions:
           method: get
     environment:
       restaurants_api: https://mpvo885p1i.execute-api.us-east-1.amazonaws.com/dev/restaurants
+      cognito_user_pool_id: us-east-1_xouKSJf6Q
+      cognito_client_id: 7jkdpgmt0ru5csgq5c6b6l180d
 
   get-restaurants:
     handler: functions/get-restaurants.handler
@@ -34,6 +36,18 @@ functions:
     environment:
       restaurants_table: restaurants
       async_metrics: true    
+
+  search-restaurants:
+    handler: functions/search-restaurants.handler     
+    events:
+      - http:
+          path: /restaurants/search
+          method: post  
+          authorizer: 
+            arn: arn:aws:cognito-idp:us-east-1:084876312037:userpool/us-east-1_xouKSJf6Q
+    environment:
+      restaurants_table: restaurants
+      async_metrics: true 
 
 resources:
   Resources:
